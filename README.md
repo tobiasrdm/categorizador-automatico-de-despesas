@@ -8,7 +8,7 @@ Esta aplicação escrita em Java 8 roda nos Sistemas Operacionais Windows, Linux
 * Os testes unitários utilizam JUnit 5, que é suportado pelo Eclipse Oxygen.1a (4.7.1a) ou versão mais recente do Eclipse. 
 
 ## Como executar a aplicação
-1. Faça download do arquivo categorizador-automatico-de-despesas-1.0.0-SNAPSHOT.jar
+1. Faça download do arquivo [categorizador-automatico-de-despesas-*.jar](../releases/latest)
 2. Crie uma pasta categorizador-automatico-de-despesas em C:\
 3. Crie um atalho no Desktop e configure como segue:
 
@@ -19,4 +19,4 @@ Esta aplicação escrita em Java 8 roda nos Sistemas Operacionais Windows, Linux
 Obs: o diretório "C:\Orçamento doméstico" deve ser substituído pelo caminho completo da pasta dos Orçamentos dométicos.
 
 ## Modelo da planilha de Orçamento Doméstico
-Um modelo da planilha de Orçamento Doméstico, preenchido com dados fictícios, está disponível no repositório: "Orçamento doméstico - Modelo - 2018.xlsx"
+Um modelo da planilha de Orçamento Doméstico, preenchido com dados fictícios, está disponível no repositório: [Orçamento doméstico - Modelo - 2018.xlsx](../blob/master/Or%C3%A7amento%20dom%C3%A9stico%20-%20Modelo%20-%202018.xlsx)
