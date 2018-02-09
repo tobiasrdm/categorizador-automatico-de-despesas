@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row.MissingCellPolicy;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -35,15 +36,22 @@ public class ExtratorDeDespesasDaPlanilha {
 		int colunaDiaDoMes = 3;
 		int colunaFormaDePagamento = 4;
 		Despesa despesa = new Despesa();
-		despesa.setDescricao(row.getCell(colunaDescricao, MissingCellPolicy.RETURN_BLANK_AS_NULL).getStringCellValue());
-		despesa.setCategoria(row.getCell(colunaCategoria, MissingCellPolicy.RETURN_BLANK_AS_NULL).getStringCellValue());
+		despesa.setDescricao(getStringCellValue(row.getCell(colunaDescricao, MissingCellPolicy.RETURN_BLANK_AS_NULL)));
+		despesa.setCategoria(getStringCellValue(row.getCell(colunaCategoria, MissingCellPolicy.RETURN_BLANK_AS_NULL)));
 		despesa.setValor(BigDecimal
 				.valueOf(row.getCell(colunaValor, MissingCellPolicy.RETURN_BLANK_AS_NULL).getNumericCellValue()));
 		despesa.setDiaDoMes(
 				(int) row.getCell(colunaDiaDoMes, MissingCellPolicy.RETURN_BLANK_AS_NULL).getNumericCellValue());
 		despesa.setFormaDePagamento(
-				row.getCell(colunaFormaDePagamento, MissingCellPolicy.RETURN_BLANK_AS_NULL).getStringCellValue());
+				getStringCellValue(row.getCell(colunaFormaDePagamento, MissingCellPolicy.RETURN_BLANK_AS_NULL)));
 		return despesa;
+	}
+	
+	private String getStringCellValue(Cell cell) {
+		if (cell == null) {
+			return null;
+		}
+		return cell.getStringCellValue();		
 	}
 
 }
