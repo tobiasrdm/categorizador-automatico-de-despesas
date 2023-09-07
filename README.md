@@ -2,19 +2,19 @@
 ## Objetivo
 Ler os lançamentos de despesas anterires de arquivos do Excel e com base nesse histório identificar a categoria de um novo lançamento de despesa.
 ## Requisitos de execução - runtime
-Esta aplicação escrita em Java 8 roda nos Sistemas Operacionais Windows, Linux e Mac OS.
+Esta aplicação escrita em Java 17 roda nos Sistemas Operacionais Windows, Linux e Mac OS.
 ## Requisitos de desenvolvimento
 * A tela foi escrita em Swing utilizando o plugin WindowBuilder do Eclipse.
-* Os testes unitários utilizam JUnit 5, que é suportado pelo Eclipse Oxygen.1a (4.7.1a) ou versão mais recente do Eclipse. 
+* Os testes unitários utilizam JUnit 5.
 
 ## Como executar a aplicação
 1. Faça download do arquivo [categorizador-automatico-de-despesas-*.jar](../../releases/latest)
 2. Crie uma pasta categorizador-automatico-de-despesas em C:\
 3. Crie um atalho no Desktop e configure como segue:
 
-**Destino:** java.exe -DdirArquivosExcel="C:\Orçamento doméstico" -jar C:\categorizador-automatico-de-despesas\categorizador-automatico-de-despesas-*.jar
+**Destino:** `java -DdirArquivosExcel="C:\Orçamento doméstico" -jar C:\categorizador-automatico-de-despesas\categorizador-automatico-de-despesas-*.jar`
 
-**Iniciar em:** C:\categorizador-automatico-de-despesas
+**Iniciar em:** `C:\categorizador-automatico-de-despesas`
 
 Obs: o diretório "C:\Orçamento doméstico" deve ser substituído pelo caminho completo da pasta dos Orçamentos dométicos.
 

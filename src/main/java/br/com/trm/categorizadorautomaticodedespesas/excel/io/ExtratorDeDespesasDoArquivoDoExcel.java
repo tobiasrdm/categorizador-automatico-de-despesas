@@ -8,11 +8,9 @@ import java.nio.file.Files;
 import java.time.Month;
 import java.time.Year;
 import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -20,6 +18,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import br.com.trm.categorizadorautomaticodedespesas.Despesa;
+import br.com.trm.categorizadorautomaticodedespesas.excel.FormatadorDeAbreviaturaDoMesAno;
 
 public class ExtratorDeDespesasDoArquivoDoExcel {
 	public Map<YearMonth, List<Despesa>> extraiDespesas(List<File> arquivosDoExcel)
@@ -54,9 +53,7 @@ public class ExtratorDeDespesasDoArquivoDoExcel {
 	}
 
 	private List<Despesa> extraiDespesasDoMesAno(XSSFWorkbook workbook, YearMonth mesAno) {
-		String abreviaturaDoMesAno = mesAno.format(DateTimeFormatter.ofPattern("MMM-yyyy", new Locale("pt", "BR")));
-		abreviaturaDoMesAno = new StringBuilder(abreviaturaDoMesAno.substring(0, 1).toUpperCase())
-				.append(abreviaturaDoMesAno.substring(1)).toString();
+		String abreviaturaDoMesAno = new FormatadorDeAbreviaturaDoMesAno().format(mesAno);
 		XSSFSheet sheet = workbook.getSheet(abreviaturaDoMesAno);
 		if (sheet != null) {
 			ExtratorDeDespesasDaPlanilha extratorDeDespesas = new ExtratorDeDespesasDaPlanilha();
