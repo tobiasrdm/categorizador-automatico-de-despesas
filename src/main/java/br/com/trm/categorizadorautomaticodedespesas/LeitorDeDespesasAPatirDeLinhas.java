@@ -36,13 +36,21 @@ public class LeitorDeDespesasAPatirDeLinhas {
 			// decimal por ponto decimal
 			despesa.setValor(new BigDecimal(valoresDasColunas.get(indexColunaValor).replace("R$ ", "").replace(".", "").replace(",", ".")));
 			despesa.setRealizado("NÃO");
-			if (despesa.getValor().compareTo(BigDecimal.ZERO) >= 0) {
-				// Só coloca na lista se o valor da despesa for maior ou igual a
-				// zero.
-				// Se for menor que zero não é uma despesa, mas sim um crédito
+			if (adicionarDespesa(despesa)) {
 				despesas.add(despesa);
 			}
 		}
 		return despesas;
+	}
+	
+	private boolean adicionarDespesa(Despesa despesa) {
+		if ("Pagamento recebido".equals(despesa.getDescricao())) {
+			// Se a descrição é "Pagamento recebido", então não é uma despesa, mas sim um
+			// crédito.
+			return false;
+		}
+		// Só coloca na lista se o valor da despesa for maior ou igual a zero.
+		// Se for menor que zero então não é uma despesa, mas sim um crédito
+		return (despesa.getValor().compareTo(BigDecimal.ZERO) >= 0);
 	}
 }
