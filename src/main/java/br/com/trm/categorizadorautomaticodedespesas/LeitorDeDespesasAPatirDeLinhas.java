@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class LeitorDeDespesasAPatirDeLinhas {
-	public List<Despesa> lerDespesas(String stringDespesas) {
+	public ReceitasEDespesas lerDespesas(String stringDespesas) {
 		// Substitui todos os Enters por Tab, colocando todos os registros em uma única linha
 		stringDespesas = stringDespesas.replace("\n\n", "\t");
 		List<String> campos = Arrays.asList(stringDespesas.split("\t"));
@@ -16,13 +16,13 @@ public class LeitorDeDespesasAPatirDeLinhas {
 			String valorDoCampoAtual = campos.get(campo); 
 			valoresDosCampos.add(valorDoCampoAtual);
 			// Verificando se é o último campo do registro
-			if (valorDoCampoAtual != null && valorDoCampoAtual.startsWith("R$")) {
+			if (valorDoCampoAtual != null && (valorDoCampoAtual.startsWith("R$") || valorDoCampoAtual.startsWith("-R$"))) {
 				valoresDosRegistros.add(valoresDosCampos);
 				// Inicia novo registro
 				valoresDosCampos = new ArrayList<>();
 			}
 		}
-		List<Despesa> despesas = new ArrayList<>();
+		ReceitasEDespesas receitasEDespesas = new ReceitasEDespesas();
 		for (List<String> valoresDasColunas : valoresDosRegistros) {
 			int indexColunaValor = valoresDasColunas.size() -1;//Última coluna
 			int indexColunaDescricao = indexColunaValor -1;//Penúltima coluna
@@ -36,14 +36,21 @@ public class LeitorDeDespesasAPatirDeLinhas {
 			// decimal por ponto decimal
 			despesa.setValor(new BigDecimal(valoresDasColunas.get(indexColunaValor).replace("R$ ", "").replace(".", "").replace(",", ".")));
 			despesa.setRealizado("NÃO");
-			if (adicionarDespesa(despesa)) {
-				despesas.add(despesa);
+			if (isDespesa(despesa)) {
+				receitasEDespesas.getDespesas().add(despesa);
+			} else {
+				receitasEDespesas.getReceitas().add(despesa);
 			}
 		}
-		return despesas;
+		return receitasEDespesas;
 	}
 	
-	private boolean adicionarDespesa(Despesa despesa) {
+	/**
+	 * 
+	 * @param despesa
+	 * @return true, se é uma despesa. Se não é uma despesa, então é uma receita (crédito) e retorna false.
+	 */
+	private boolean isDespesa(Despesa despesa) {
 		if ("Pagamento recebido".equals(despesa.getDescricao())) {
 			// Se a descrição é "Pagamento recebido", então não é uma despesa, mas sim um
 			// crédito.

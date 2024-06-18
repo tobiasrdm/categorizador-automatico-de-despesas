@@ -20,6 +20,7 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import br.com.trm.categorizadorautomaticodedespesas.Despesa;
 import br.com.trm.categorizadorautomaticodedespesas.DespesasJaLancadas;
 import br.com.trm.categorizadorautomaticodedespesas.LeitorDeDespesasAPatirDeLinhas;
+import br.com.trm.categorizadorautomaticodedespesas.ReceitasEDespesas;
 import br.com.trm.categorizadorautomaticodedespesas.excel.FormatadorDeDespesasComTab;
 import br.com.trm.categorizadorautomaticodedespesas.excel.io.LeitorDeArquivosDoExcel;
 
@@ -35,6 +36,7 @@ public class TelaNovasDespesas {
 	private JComboBox<String> comboBoxFormaDePagamento;
 	private JFormattedTextField frmtdtxtfldDia;
 	private JLabel lblValorqtdderegistros;
+	private JTextArea txtCreditosReceitas;
 	private DespesasJaLancadas despesasJaLancadas;
 
 	/**
@@ -79,7 +81,7 @@ public class TelaNovasDespesas {
 
 		txtrText = new JTextArea();
 		sl_panel.putConstraint(SpringLayout.WEST, txtrText, 10, SpringLayout.WEST, panel);
-		sl_panel.putConstraint(SpringLayout.SOUTH, txtrText, -10, SpringLayout.SOUTH, panel);
+		sl_panel.putConstraint(SpringLayout.SOUTH, txtrText, -163, SpringLayout.SOUTH, panel);
 		sl_panel.putConstraint(SpringLayout.EAST, txtrText, -10, SpringLayout.EAST, panel);
 		txtrText.setColumns(50);
 		txtrText.setRows(20);
@@ -89,8 +91,8 @@ public class TelaNovasDespesas {
 		JButton btnFormatar = new JButton("Formatar");
 		btnFormatar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				List<Despesa> despesas = new LeitorDeDespesasAPatirDeLinhas().lerDespesas(txtrText.getText());
-				for (Despesa despesa : despesas) {
+				ReceitasEDespesas receitasEDespesas = new LeitorDeDespesasAPatirDeLinhas().lerDespesas(txtrText.getText());
+				for (Despesa despesa : receitasEDespesas.getDespesas()) {
 					despesa.setDiaDoMes(Integer.valueOf(frmtdtxtfldDia.getText()));
 					despesa.setFormaDePagamento(comboBoxFormaDePagamento.getSelectedItem().toString().trim());
 					Despesa despesaJaLancada = despesasJaLancadas
@@ -99,9 +101,10 @@ public class TelaNovasDespesas {
 						despesa.setCategoria(despesaJaLancada.getCategoria());
 					}
 				}
-				List<String> registros = new FormatadorDeDespesasComTab().formataDespesas(despesas);
+				//Formatando as despesas na tela
+				List<String> registrosDespesas = new FormatadorDeDespesasComTab().formataDespesas(receitasEDespesas.getDespesas());
 				txtrText.setText("");
-				for (String registro : registros) {
+				for (String registro : registrosDespesas) {
 					if (txtrText.getText().length() > 0) {
 						txtrText.setText(txtrText.getText() + "\n");
 					}
@@ -109,7 +112,16 @@ public class TelaNovasDespesas {
 				}
 				txtrText.requestFocus();
 				txtrText.selectAll();
-				lblValorqtdderegistros.setText(String.valueOf(registros.size()));
+				lblValorqtdderegistros.setText(String.valueOf(registrosDespesas.size()));
+				//Formatando as receitas/créditos na tela
+				List<String> registrosReceitas = new FormatadorDeDespesasComTab().formataDespesas(receitasEDespesas.getReceitas());
+				txtCreditosReceitas.setText("");
+				for (String registro : registrosReceitas) {
+					if (txtCreditosReceitas.getText().length() > 0) {
+						txtCreditosReceitas.setText(txtCreditosReceitas.getText() + "\n");
+					}
+					txtCreditosReceitas.setText(txtCreditosReceitas.getText() + registro);
+				}
 			}
 		});
 
@@ -149,6 +161,7 @@ public class TelaNovasDespesas {
 			public void actionPerformed(ActionEvent e) {
 				txtrText.setText("");
 				lblValorqtdderegistros.setText("");
+				txtCreditosReceitas.setText("");
 			}
 		});
 		sl_panel.putConstraint(SpringLayout.NORTH, btnLimpar, 0, SpringLayout.NORTH, comboBoxFormaDePagamento);
@@ -164,6 +177,19 @@ public class TelaNovasDespesas {
 				comboBoxFormaDePagamento);
 		sl_panel.putConstraint(SpringLayout.WEST, lblValorqtdderegistros, 6, SpringLayout.EAST, lblQtdDeRegistros);
 		panel.add(lblValorqtdderegistros);
+		
+		JLabel lblCreditosReceitas = new JLabel("Créditos/Receitas");
+		sl_panel.putConstraint(SpringLayout.NORTH, lblCreditosReceitas, 6, SpringLayout.SOUTH, txtrText);
+		sl_panel.putConstraint(SpringLayout.WEST, lblCreditosReceitas, 0, SpringLayout.WEST, txtrText);
+		panel.add(lblCreditosReceitas);
+		
+		txtCreditosReceitas = new JTextArea();
+		lblCreditosReceitas.setLabelFor(txtCreditosReceitas);
+		sl_panel.putConstraint(SpringLayout.NORTH, txtCreditosReceitas, 6, SpringLayout.SOUTH, lblCreditosReceitas);
+		sl_panel.putConstraint(SpringLayout.WEST, txtCreditosReceitas, 10, SpringLayout.WEST, panel);
+		sl_panel.putConstraint(SpringLayout.SOUTH, txtCreditosReceitas, 133, SpringLayout.SOUTH, lblCreditosReceitas);
+		sl_panel.putConstraint(SpringLayout.EAST, txtCreditosReceitas, 0, SpringLayout.EAST, txtrText);
+		panel.add(txtCreditosReceitas);
 	}
 
 	private void carregaDespesasJaLancadas() throws InvalidFormatException, IOException {
