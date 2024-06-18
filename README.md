@@ -4,8 +4,9 @@ Ler os lançamentos de despesas anterires de arquivos do Excel e com base nesse 
 ## Requisitos de execução - runtime
 Esta aplicação escrita em Java 17 roda nos Sistemas Operacionais Windows, Linux e Mac OS.
 ## Requisitos de desenvolvimento
-* A tela foi escrita em Swing utilizando o plugin WindowBuilder do Eclipse.
-* Os testes unitários utilizam JUnit 5.
+- A tela foi escrita em Swing utilizando o plugin WindowBuilder do Eclipse (disponível no Marketplace).  
+  Para abrir o formulário de Design, clique com o botão direito do mouse sobre o arquivo `TelaNovasDespesas.java` e selecione o menu suspenso `Open with > WindowBuilder Editor`.
+- Os testes unitários utilizam JUnit 5.
 
 ## Como executar a aplicação
 1. Faça download do arquivo [categorizador-automatico-de-despesas-*.jar](../../releases/latest)
