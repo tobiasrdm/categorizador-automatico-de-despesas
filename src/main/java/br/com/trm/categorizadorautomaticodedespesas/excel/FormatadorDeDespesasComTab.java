@@ -18,7 +18,7 @@ public class FormatadorDeDespesasComTab {
 	private String formata(Despesa despesa) {
 		return new StringBuilder().append(despesa.getDescricao()).append("\t").append(nullAsEmpty(despesa.getCategoria()))
 				.append("\t").append(despesa.getValor().toString().replace(".", ",")).append("\t")
-				.append(despesa.getDiaDoMes()).append("\t").append(despesa.getFormaDePagamento()).append("\t")
+				.append(nullAsEmpty(despesa.getDiaDoMes())).append("\t").append(nullAsEmpty(despesa.getFormaDePagamento())).append("\t")
 				.append(despesa.getRealizado()).toString();
 	}
 
@@ -29,5 +29,12 @@ public class FormatadorDeDespesasComTab {
 			return "";
 		}
 	}
-
+	
+	private String nullAsEmpty(Integer valor) {
+		if (valor != null) {
+			return valor.toString();
+		} else {
+			return "";
+		}
+	}
 }
