@@ -82,7 +82,6 @@ public class TelaNovasDespesas {
 		txtrText = new JTextArea();
 		sl_panel.putConstraint(SpringLayout.WEST, txtrText, 10, SpringLayout.WEST, panel);
 		sl_panel.putConstraint(SpringLayout.SOUTH, txtrText, -163, SpringLayout.SOUTH, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, txtrText, -10, SpringLayout.EAST, panel);
 		txtrText.setColumns(50);
 		txtrText.setRows(20);
 		txtrText.setText("");
@@ -180,15 +179,16 @@ public class TelaNovasDespesas {
 		
 		JLabel lblCreditosReceitas = new JLabel("Créditos/Receitas");
 		sl_panel.putConstraint(SpringLayout.NORTH, lblCreditosReceitas, 6, SpringLayout.SOUTH, txtrText);
-		sl_panel.putConstraint(SpringLayout.WEST, lblCreditosReceitas, 0, SpringLayout.WEST, txtrText);
+		sl_panel.putConstraint(SpringLayout.WEST, lblCreditosReceitas, 10, SpringLayout.WEST, panel);
 		panel.add(lblCreditosReceitas);
 		
 		txtCreditosReceitas = new JTextArea();
+		sl_panel.putConstraint(SpringLayout.EAST, txtrText, 0, SpringLayout.EAST, txtCreditosReceitas);
+		sl_panel.putConstraint(SpringLayout.WEST, txtCreditosReceitas, 10, SpringLayout.WEST, panel);
+		sl_panel.putConstraint(SpringLayout.EAST, txtCreditosReceitas, -10, SpringLayout.EAST, panel);
 		lblCreditosReceitas.setLabelFor(txtCreditosReceitas);
 		sl_panel.putConstraint(SpringLayout.NORTH, txtCreditosReceitas, 6, SpringLayout.SOUTH, lblCreditosReceitas);
-		sl_panel.putConstraint(SpringLayout.WEST, txtCreditosReceitas, 10, SpringLayout.WEST, panel);
 		sl_panel.putConstraint(SpringLayout.SOUTH, txtCreditosReceitas, 133, SpringLayout.SOUTH, lblCreditosReceitas);
-		sl_panel.putConstraint(SpringLayout.EAST, txtCreditosReceitas, 0, SpringLayout.EAST, txtrText);
 		panel.add(txtCreditosReceitas);
 	}
 
