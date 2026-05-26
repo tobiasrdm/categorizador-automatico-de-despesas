@@ -60,9 +60,9 @@ public class LeitorDeDespesasAPatirDeLinhas {
 		for (String registro: registros) {
 			Despesa despesa = new Despesa();
 			registro = registro.replace("−R$", "-R$");//O primeiro não é um sinal de menos, é outro caractere que causa erro
-			int inicioDoCampoValor = registro.indexOf("-R$ ");
+			int inicioDoCampoValor = registro.lastIndexOf("-R$ ");
 			if (inicioDoCampoValor == -1) {
-				inicioDoCampoValor = registro.indexOf("R$ ");
+				inicioDoCampoValor = registro.lastIndexOf("R$ ");
 			}
 			int inicioDoCampoDescricao = "01 AGO".length();
 			despesa.setDescricao(registro.substring(inicioDoCampoDescricao, inicioDoCampoValor -1).trim());
